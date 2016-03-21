@@ -2,6 +2,7 @@ import java.awt.*;
 import javax.swing.JPanel;
 import java.lang.Math;
 import java.awt.Graphics2D;
+import java.util.*;
 /**
  * Write a description of class FractalTree here.
  * 
@@ -23,6 +24,8 @@ public class FractalTree extends JPanel
     private double percent;
     private double smallest;
     private double angle;
+    private ArrayList<Color> colors;
+    
     /**
      * Default constructor for objects of class FractalTree
      */
@@ -35,40 +38,60 @@ public class FractalTree extends JPanel
         this.percent= percent;
         this.smallest= smallest;
         this.angle= angle;
-        setBackground(Color.black);
-        
+        this.setPreferredSize(new Dimension(1000,1000));
+        setBackground(Color.white);
+
+        this.colors= new ArrayList<Color>();
+        colors.add(0,Color.blue);
+        colors.add(0,Color.red);
+        colors.add(0,Color.gray);
+        colors.add(0,Color.green);
+        colors.add(0,Color.orange);
+        colors.add(0,Color.pink);
+        colors.add(0,Color.yellow);
+        colors.add(0,Color.black);
     }
 
 
-    public void drawFractal(Graphics g, double prevAngle, double startX, double startY, double endX, double endY, int prevLength ){
+    public void drawFractal(Graphics g2, double prevAngle, double startX, double startY, double endX, double endY, double prevLength ){
+        //caculates length;
         double length= prevLength*percent;
+        //calculates new angles
         double newAngle1= prevAngle-Math.PI/6;
         double newAngle2= prevAngle+ Math.PI/6;
         double leftX, leftY, rightX, rightY;  
         
-        if(length< smallest){
-            g.drawLine((int)startX, (int)startY, (int)endX, (int)endY);
+        if(length< this.smallest){
+            //terminating sequence;
         }
         else{
-            if(newAngle1<=0){
-                newAngle1= Math.PI/2;
-            }
-            leftX= endX+(Math.cos(newAngle)*length);
-            rightX= endX-(Math.cos(newAngle)*length);
+            //draws the orignal line
+            Random rand= new Random();
+            g2.setColor(colors.get(rand.nextInt(colors.size()-1)));
+            g2.drawLine((int)startX, (int)startY, (int)endX, (int)endY);
+            //creates left coordinates
+            leftX= endX-Math.cos(newAngle2)*length;
+            leftY= endY-Math.sin(newAngle2)*length;
+            //calculats right coordinates
+            rightX= endX-Math.cos(newAngle1)*length;
+            rightY= endY-Math.sin(newAngle1)*length;
             
-            leftY= endY+(Math.sin(newAngle/2)*length);
-            rightY= endY-(Math.sin(newAngle/2)*length);
-            
-            drawFractal(g, newAngle, endX, endY, leftX,leftY,(int)length);
-            drawFractal(g, newAngle, endX, endY, rightX, rightY, (int)length);
+            //drawfractals
+            this.drawFractal(g2, newAngle1, endX, endY, leftX ,leftY,(int)length);
+            this.drawFractal(g2, newAngle2, endX, endY, rightX, rightY, (int)length);
             
         }
     
     }
     
-    public void paint(Graphics g){
-        int length= 100;
-        drawFractal(g, angle, startX, startY, endX, endY,500); 
+    public void paintComponent(Graphics g){
+        Graphics g2= (Graphics2D) g;
+        super.paintComponent(g2);
+
+        
+        double distance= Math.sqrt((startX-endX)*(startX-endX)+ (startY-endY)*(startY-endY));
+        //initializes the problem
+        this.drawFractal(g2, angle, startX, startY, endX, endY,distance); 
     }
 }
 

@@ -5,23 +5,11 @@ import java.lang.Math;
 public class FractalTreeViewer 
 {
 
-    private final int WIDTH = 600;
-    private final int HEIGHT = 600;
+    private final int WIDTH = 1200;
+    private final int HEIGHT = 900;
     private JFrame frame;
     
-    public static void main(String[] args)
-    {
-        // initialise instance variables
-       int x1= 100;
-       int y1= 500;
-       int x2= 100;
-       int y2= 10;
-       double percent= .67;
-       double smallest=1;
-       double angle= Math.PI/2;
-        FractalTreeViewer viewer= new FractalTreeViewer(x1, y1, x2, y2, percent, smallest, angle);
-       
-    }   
+    
 
     /**
      * An example of a method - replace this comment with your own
@@ -38,9 +26,24 @@ public class FractalTreeViewer
     {
         frame= new JFrame();
         frame.setSize(WIDTH, HEIGHT);
+        frame.setTitle("FRACTAL TREE");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         FractalTree fTree= new FractalTree( startX, startY, endX, endY, percent, smallest, angle);
         this.frame.add(fTree);
         this.frame.setVisible(true);
     }
+    public static void main(String[] args)
+    {
+        // initialise instance variables
+       int x1= 250;
+       int y1= 600;
+       int x2= 250;
+       int y2= 400;
+       double percent= .75;
+       double smallest=10;
+       double angle= Math.PI/2;
+       FractalTreeViewer viewer= new FractalTreeViewer(x1, y1, x2, y2, percent, smallest, angle);
+       //calls fractal tree
+    }   
 
 }
