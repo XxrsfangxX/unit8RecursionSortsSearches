@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.lang.Math;
+import java.util.Scanner;
 public class FractalTreeViewer 
 {
 
@@ -35,12 +36,19 @@ public class FractalTreeViewer
     public static void main(String[] args)
     {
         // initialise instance variables
-       int x1= 250;
-       int y1= 600;
-       int x2= 250;
-       int y2= 400;
-       double percent= .75;
-       double smallest=10;
+       Scanner scan= new Scanner(System.in);
+       System.out.println("What do you want your bottom xCordinate to be(int only): ");
+       int x1= scan.nextInt();
+       System.out.println("What do you want your bottom yCordinate to be (int only): ");
+       int y1= scan.nextInt();
+       System.out.println("What do you want your top xCordinate to be(if you want your line to be vertical make sure it is the same as the previous x coordinate): ");
+       int x2= scan.nextInt();
+       System.out.println("What do you want your top yCordinate to be(int only): ");
+       int y2= scan.nextInt();
+       System.out.println("What do you want the percent length change: ");
+       double percent= scan.nextDouble();
+       System.out.println("How small do you want to make the smallest length");
+       double smallest= scan.nextInt();
        double angle= Math.PI/2;
        FractalTreeViewer viewer= new FractalTreeViewer(x1, y1, x2, y2, percent, smallest, angle);
        //calls fractal tree
